@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/rdmty_auras.css">
+    <!--<script src="lib/react-0.13.1.min.js"></script>-->
+    <script src="http://fb.me/react-0.13.1.js"></script>
+    <script src="lib/lodash.min.js"></script>
+    <script src="app/rdmty_spelltimer.js"></script>
+    <script>
+        document.addEventListener("onOverlayLogUpdate", function(e) {
+            if (e.detail && e.detail.logInfo && e.detail.logInfo.logLine) {
+                //console.log('log update' + e.detail + JSON.stringify(e.detail.logInfo));
+                React.render(
+                    React.createElement(SpellTimer, {
+                        isImport: e.detail.isImport,
+                        logInfo: e.detail.logInfo
+                    }),
+                    document.getElementById('spelltimer-container')
+                );
+            }
+        });
+        document.addEventListener("onOverlayStateUpdate", function (e) {
+            if (!e.detail.isLocked) {
+				document.documentElement.classList.add("resizable");
+            } else {
+				document.documentElement.classList.remove("resizable");
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="spelltimer-container">
+    </div>
+</body>
+</html>
