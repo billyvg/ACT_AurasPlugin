@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Text.RegularExpressions;
 using RainbowMage.OverlayPlugin;
 
 namespace Weak.AurasPlugin
@@ -48,20 +49,89 @@ namespace Weak.AurasPlugin
 
         public AurasOverlay(AurasOverlayConfig config) : base(config, config.Name)
         {
+            Regex auraRgx = new Regex(@"You (?<action>\w+) the effect of (?<name>.*?)\.", RegexOptions.IgnoreCase);
+            Regex stanceRgx = new Regex(@"You move into (?<name>.*?)\.", RegexOptions.IgnoreCase);
+            Regex skillRgx = new Regex(@"You use (?<name>.*?)\.", RegexOptions.IgnoreCase);
+            Match match;
+
             ActGlobals.oFormActMain.OnLogLineRead += (isImport, logInfo) =>
             {
                 /* logInfo: detectedTime, detectedType, detectedZone, inCombat, logLin */
                 var importStr = "false";
+ 
+                var updateScript = "";
+                bool hasUpdate = false;
+
                 if (isImport)
                 {
                     importStr = "true";
                 }
 
-                var updateScript = "document.dispatchEvent(new CustomEvent('onOverlayLogUpdate', { detail: {isImport: " + importStr + ", logInfo: {timestamp: '" + logInfo.detectedTime + "', logLine: '" + AurasOverlay.CreateJsonSafeString(logInfo.logLine) + "'}}}));";
+                match = auraRgx.Match(logInfo.logLine);
+                if (match.Success)
+                {
+                    hasUpdate = true;
+                    GroupCollection groups = match.Groups;
+                    updateScript += "document.dispatchEvent(new CustomEvent('auraUpdate', {" +
+                        "detail: {" +
+                        "aura: {" +
+                        "action: '" + groups["action"].Value + "'," +
+                        "name: '" + groups["name"].Value + "'" +
+                        "}" +
+                        "}}))";
+                }
+                else
+                {
+                    match = stanceRgx.Match(logInfo.logLine);
+                    if (match.Success)
+                    {
+                        hasUpdate = true;
+                        GroupCollection groups = match.Groups;
+                        updateScript += "document.dispatchEvent(new CustomEvent('stanceUpdate', {" +
+                            "detail: {" +
+                                "stance: {" +
+                                    "name: '" + groups["name"].Value + "'" +
+                                 "}" +
+                            "}}))";
+                    }
+
+                    else
+                    {
+                        match = skillRgx.Match(logInfo.logLine);
+                        if (match.Success)
+                        {
+                            hasUpdate = true;
+                            GroupCollection groups = match.Groups;
+                            updateScript += "document.dispatchEvent(new CustomEvent('skillUpdate', {" +
+                            "detail: {" +
+                                "skill: {" +
+                                    "name: '" + groups["name"].Value + "'" +
+                                 "}" +
+                            "}}))";
+                        }
+                    }
+                }
+
+                /*
+                var updateScript = "document.dispatchEvent(new CustomEvent('onOverlayLogUpdate', {" +
+                    "detail: {" +
+                        "raw: {" +
+                            "isImport: " + importStr + ", " +
+                            "logInfo: {" +
+                                "timestamp: '" + logInfo.detectedTime + "'," +
+                                "logLine: '" + AurasOverlay.CreateJsonSafeString(logInfo.logLine) + "'" +
+                            "}" +
+                         "}" +
+                         auraStr +
+                         stanceStr +
+                    "}}));";
+                 */
+                System.Diagnostics.Debug.WriteLine(updateScript);
 
                 if (this.Overlay != null &&
                     this.Overlay.Renderer != null &&
-                    this.Overlay.Renderer.Browser != null)
+                    this.Overlay.Renderer.Browser != null &&
+                    hasUpdate)
                 {
                     this.Overlay.Renderer.Browser.GetMainFrame().ExecuteJavaScript(updateScript, null, 1);
                 }
