@@ -281,14 +281,20 @@ li:last-child {
 }
 
 .sprite {
-    width: 80px;
-    height: 256px;
+    width: 100px;
+    height: 320px;
     overflow: hidden;
+    background-repeat: no-repeat;
 }
 .sprite.left {
 }
 .sprite.right {
-    background-position: -175px 0px;
+    background-position: -150px 0px;
+}
+.sprite.up {
+    transform: rotate(0.25turn);
+    top: -70px;
+    left: 70px;
 }
 
 .texture {
@@ -311,6 +317,9 @@ li:last-child {
 .hidden {
     opacity: 0;
 }
+.invisible {
+    display:  none;
+}
 .resizable .hidden {
     opacity: 1;
 }
@@ -328,4 +337,24 @@ li:last-child {
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+.skill-icons {
+    overflow: hidden;
+}
+.skill-icon-container {
+    float: left;
+}
+
+.skill-icon {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    opacity: 0.8;
+    width: 40px;
+    height: 40px;
+    margin-right: 2px;
+}
+
+.large {
+    transform: scale(2, 2);
 }
