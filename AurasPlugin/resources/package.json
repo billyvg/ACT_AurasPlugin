@@ -1,0 +1,15 @@
+{
+  "name": "overlayplugin-auras",
+  "version": "1.0.0",
+  "description": "Plugin for OverlayPlugin that sends events for spell uses and buffs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jsx": "^0.9.89",
+    "react-tools": "^0.13.2"
+  }
+}

@@ -390,15 +390,33 @@
     <Content Include="resources\images\overlay.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\images\skills\chaos thrust.png" />
-    <Content Include="resources\images\skills\cleric stance.png" />
-    <Content Include="resources\images\skills\disembowel.png" />
-    <Content Include="resources\images\skills\full thrust.png" />
-    <Content Include="resources\images\skills\heavy thrust.png" />
-    <Content Include="resources\images\skills\impulse drive.png" />
-    <Content Include="resources\images\skills\phlebotomize.png" />
-    <Content Include="resources\images\skills\true thrust.png" />
-    <Content Include="resources\images\skills\vorpal thrust.png" />
+    <Content Include="resources\images\skills\chaos thrust.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\skills\cleric stance.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\skills\disembowel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\skills\full thrust.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\skills\heavy thrust.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\skills\impulse drive.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\skills\phlebotomize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\skills\true thrust.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\skills\vorpal thrust.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\images\textures\Aura1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -858,7 +876,9 @@
     <Content Include="resources\lib\react-0.13.1.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="resources\rotation.html" />
+    <Content Include="resources\rotation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AurasOverlayConfigPanel.ja-JP.resx">
@@ -886,9 +906,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="resources\app\rdmty_spelltimer.jsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="resources\app\rdmty_spelltimer.jsx" />
     <Content Include="resources\lib\D3JS LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1021,10 +1039,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(SolutionDir)README.md" "$(TargetDir)EnmityOverlay-README.txt"
-copy /Y "$(SolutionDir)LICENSE.txt" "$(TargetDir)EnmityOverlay-LICENSE.txt"
+    <PostBuildEvent>copy /Y "$(SolutionDir)README.md" "$(TargetDir)OverlayAuras-README.txt"
+copy /Y "$(SolutionDir)LICENSE.txt" "$(TargetDir)OverlayAuras-LICENSE.txt"
 mkdir "$(TargetDir)\addons"
 move /Y "$(TargetPath)" "$(TargetDir)\addons"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>jsx --harmony -x jsx $(ProjectDir)\resources\app $(ProjectDir)\resources\app</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
