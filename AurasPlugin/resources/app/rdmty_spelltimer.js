@@ -13,7 +13,7 @@ var SkillDb = {
         timer: 15000
     },
     'demolish': {
-        timer: 18000
+        timer: 21000
     },
     'steel peak': {
         cooldown: 40000
@@ -102,7 +102,7 @@ var DragoonRotation = [
             return skills.remaining('heavy thrust') >= 2500 &&
                 skills.remaining('impulse drive') >= 5000 &&
                 skills.remaining('chaos thrust') >= 5000 &&
-                skills.remaining('phlebotomize') >= 1000 && 
+                skills.remaining('phlebotomize') >= 1000 &&
                 skills.remaining('true thrust') <= 0;
         },
         name: 'true thrust'
@@ -194,7 +194,7 @@ var RotationDb = {
             this.timeout(skill);
         }
         else {
-            console.warn('"' + skill + '" has no DB entry');
+            //console.warn('"' + skill + '" has no DB entry');
         }
     }});
 
@@ -333,25 +333,51 @@ Texture.defaultProps = {
 };
 
 var ____Class3=React.Component;for(var ____Class3____Key in ____Class3){if(____Class3.hasOwnProperty(____Class3____Key)){SpellTimer[____Class3____Key]=____Class3[____Class3____Key];}}var ____SuperProtoOf____Class3=____Class3===null?null:____Class3.prototype;SpellTimer.prototype=Object.create(____SuperProtoOf____Class3);SpellTimer.prototype.constructor=SpellTimer;SpellTimer.__superConstructor__=____Class3;function SpellTimer(){"use strict";if(____Class3!==null){____Class3.apply(this,arguments);}}
-	Object.defineProperty(SpellTimer.prototype,"render",{writable:true,configurable:true,value:function() {"use strict";
-        // for now parse logs in here
-        return (
-            React.createElement("div", {className: "texture-container"}, 
-                auras.has('cleric stance') ?
-                    React.createElement("div", {style: {'font-size': 24 + 'px', 'font-weight': 'bold', color: '#ff69b4'}}, "YOURE IN CLERIC STANCE RETARD") : null, 
-
-                React.createElement(SpriteTexture, {position: "left", visible: auras.has('freecure'), name: "Aura3"}), 
-                React.createElement(SpriteTexture, {position: "right", visible: auras.has('overcure'), name: "Aura3"}), 
-                React.createElement(SpriteTexture, {position: "up", visible: stances.inStance('raptor form') && skills.remaining('twin snakes') <- 5000, name: "Aura1"}), 
-                React.createElement(SpriteTexture, {position: "up", visible: stances.inStance('raptor form'), name: "Aura28"}), 
-            
-                React.createElement(SpriteTexture, {position: "right", visible: stances.inStance('coeurl form') && skills.remaining('demolish') <= 5000, name: "Aura1"}), 
-                React.createElement(SpriteTexture, {position: "right", visible: stances.inStance('coeurl form'), name: "Aura28"}), 
-                React.createElement(SpriteTexture, {position: "left", visible: stances.inStance('opo-opo form') && skills.remaining('dragon kick') <= 5000, name: "Aura1"}), 
-                React.createElement(SpriteTexture, {position: "left", visible: stances.inStance('opo-opo form'), name: "Aura28"})
+  Object.defineProperty(SpellTimer.prototype,"render",{writable:true,configurable:true,value:function() {"use strict";
+    // for now parse logs in here
+    return (
+      React.createElement("div", {className: "texture-container"}, 
+        
+          auras.has('cleric stance') ?
+            React.createElement("div", {style: {'font-size': 24 + 'px', 'font-weight': 'bold', color: '#ff69b4'}}, 
+              "YOURE IN CLERIC STANCE RETARD"
             )
-        );
-	}});
+            : null, 
+        
+
+        React.createElement("div", {className: "texture-side"}, 
+          React.createElement("div", {className: "texture-list"}, 
+            React.createElement(SpriteTexture, {position: "left", visible: auras.has('freecure'), name: "Aura3"}), 
+            
+              stances.inStance('opo-opo form') && skills.remaining('dragon kick') <= 5000 ?
+                React.createElement(SpriteTexture, {position: "left", visible: true, name: "Aura1"})
+              : React.createElement(SpriteTexture, {position: "left", visible: stances.inStance('opo-opo form'), name: "Aura28"})
+            
+          )
+        ), 
+
+        React.createElement("div", {className: "texture-middle"}, 
+          
+            stances.inStance('raptor form') && skills.remaining('twin snakes') <= 5000 ?
+              React.createElement(SpriteTexture, {position: "up", visible: true, name: "Aura1"})
+            : React.createElement(SpriteTexture, {position: "up", visible: stances.inStance('raptor form'), name: "Aura28"})
+          
+        ), 
+
+        React.createElement("div", {className: "texture-side"}, 
+          React.createElement("div", {className: "texture-list"}, 
+            React.createElement(SpriteTexture, {position: "right", visible: auras.has('overcure'), name: "Aura3"}), 
+
+            
+              stances.inStance('coeurl form') && skills.remaining('demolish') <= 4000 ?
+                React.createElement(SpriteTexture, {position: "right", visible: true, name: "Aura1"})
+                : React.createElement(SpriteTexture, {position: "right", visible: stances.inStance('coeurl form'), name: "Aura28"})
+            
+          )
+        )
+      )
+    );
+  }});
 
 
 var ____Class4=React.Component;for(var ____Class4____Key in ____Class4){if(____Class4.hasOwnProperty(____Class4____Key)){RotationHelper[____Class4____Key]=____Class4[____Class4____Key];}}var ____SuperProtoOf____Class4=____Class4===null?null:____Class4.prototype;RotationHelper.prototype=Object.create(____SuperProtoOf____Class4);RotationHelper.prototype.constructor=RotationHelper;RotationHelper.__superConstructor__=____Class4;function RotationHelper(){"use strict";if(____Class4!==null){____Class4.apply(this,arguments);}}

@@ -13,7 +13,7 @@ var SkillDb = {
         timer: 15000
     },
     'demolish': {
-        timer: 18000
+        timer: 21000
     },
     'steel peak': {
         cooldown: 40000
@@ -102,7 +102,7 @@ var DragoonRotation = [
             return skills.remaining('heavy thrust') >= 2500 &&
                 skills.remaining('impulse drive') >= 5000 &&
                 skills.remaining('chaos thrust') >= 5000 &&
-                skills.remaining('phlebotomize') >= 1000 && 
+                skills.remaining('phlebotomize') >= 1000 &&
                 skills.remaining('true thrust') <= 0;
         },
         name: 'true thrust'
@@ -194,7 +194,7 @@ class Skills {
             this.timeout(skill);
         }
         else {
-            console.warn('"' + skill + '" has no DB entry');
+            //console.warn('"' + skill + '" has no DB entry');
         }
     }
 
@@ -333,25 +333,51 @@ Texture.defaultProps = {
 };
 
 class SpellTimer extends React.Component {
-	render() {
-        // for now parse logs in here
-        return (
-            <div className="texture-container">
-                {auras.has('cleric stance') ?
-                    <div style={{'font-size': 24 + 'px', 'font-weight': 'bold', color: '#ff69b4'}}>YOURE IN CLERIC STANCE RETARD</div> : null}
-
-                <SpriteTexture position="left" visible={auras.has('freecure')} name="Aura3" />
-                <SpriteTexture position="right" visible={auras.has('overcure')} name="Aura3" />
-                <SpriteTexture position="up" visible={stances.inStance('raptor form') && skills.remaining('twin snakes') <- 5000} name="Aura1" />
-                <SpriteTexture position="up" visible={stances.inStance('raptor form')} name="Aura28" />
-            
-                <SpriteTexture position="right" visible={stances.inStance('coeurl form') && skills.remaining('demolish') <= 5000} name="Aura1" />
-                <SpriteTexture position="right" visible={stances.inStance('coeurl form')} name="Aura28" />
-                <SpriteTexture position="left" visible={stances.inStance('opo-opo form') && skills.remaining('dragon kick') <= 5000} name="Aura1" />
-                <SpriteTexture position="left" visible={stances.inStance('opo-opo form')} name="Aura28" />
+  render() {
+    // for now parse logs in here
+    return (
+      <div className="texture-container">
+        {
+          auras.has('cleric stance') ?
+            <div style={{'font-size': 24 + 'px', 'font-weight': 'bold', color: '#ff69b4'}}>
+              YOURE IN CLERIC STANCE!!!
             </div>
-        );
-	}
+            : null
+        }
+
+        <div className="texture-side">
+          <div className="texture-list">
+            <SpriteTexture position="left" visible={auras.has('freecure')} name="Aura3" />
+            {
+              stances.inStance('opo-opo form') && skills.remaining('dragon kick') <= 5000 ?
+                <SpriteTexture position="left" visible={true} name="Aura1" />
+              : <SpriteTexture position="left" visible={stances.inStance('opo-opo form')} name="Aura28" />
+            }
+          </div>
+        </div>
+
+        <div className="texture-middle">
+          {
+            stances.inStance('raptor form') && skills.remaining('twin snakes') <= 5000 ?
+              <SpriteTexture position="up" visible={true} name="Aura1" />
+            : <SpriteTexture position="up" visible={stances.inStance('raptor form')} name="Aura28" />
+          }
+        </div>
+
+        <div className="texture-side">
+          <div className="texture-list">
+            <SpriteTexture position="right" visible={auras.has('overcure')} name="Aura3" />
+
+            {
+              stances.inStance('coeurl form') && skills.remaining('demolish') <= 4000 ?
+                <SpriteTexture position="right" visible={true} name="Aura1" />
+                : <SpriteTexture position="right" visible={stances.inStance('coeurl form')} name="Aura28" />
+            }
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 class RotationHelper extends React.Component {

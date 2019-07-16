@@ -282,7 +282,7 @@ li:last-child {
 
 .sprite {
     width: 100px;
-    height: 320px;
+    height: 255px;
     overflow: hidden;
     background-repeat: no-repeat;
 }
@@ -292,26 +292,7 @@ li:last-child {
     background-position: -150px 0px;
 }
 .sprite.up {
-    transform: rotate(0.25turn);
-    top: -70px;
-    left: 70px;
-}
-
-.texture {
-	position: absolute;
-}
-.texture.right {
-	right: 0;
-	bottom: 30px;
-}
-.texture.left {
-	left: 0;
-	bottom: 30px;
-}
-
-.texture.middle {
-	left: 110px;
-	bottom: 0;
+    transform: translateY(-80px) rotate(0.25turn);
 }
 
 .hidden {
@@ -330,6 +311,30 @@ li:last-child {
     left: 0;
     right: 0;
     bottom: 0;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.texture-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.texture-list {
+  position: relative;
+  width: 100px;
+  height: 255px;
+}
+
+.texture-list .sprite {
+  position: absolute;
+}
+
+.texture-middle {
+  display: flex;
+  flex-direction: column;
 }
 #spelltimer-container {
     position: absolute;
